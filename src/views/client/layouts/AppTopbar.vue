@@ -1,4 +1,7 @@
 <template>
+  <div class="text-center bg-gray-800 text-white">
+    <router-link to="/"> Truy cập trang admin </router-link>
+  </div>
   <div
     :class="{ '!bg-primary': isScrolled }"
     class="h-32 w-full drop-shadow-md bg-white flex flex-col gap-1 z-50 sticky top-0"
@@ -90,23 +93,7 @@
           Sản phẩm
         </router-link>
         <router-link
-          to="#"
-          style="transition: 0.3s ease"
-          :class="{ 'text-white': isScrolled }"
-          class="hover:text-gray-700 text-primary"
-        >
-          Thương hiệu
-        </router-link>
-        <router-link
-          to="#"
-          style="transition: 0.3s ease"
-          :class="{ 'text-white': isScrolled }"
-          class="hover:text-gray-700 text-primary"
-        >
-          Hàng độc quyền
-        </router-link>
-        <router-link
-          to="#"
+          to="/client/promotion"
           style="transition: 0.3s ease"
           :class="{ 'text-white': isScrolled }"
           class="hover:text-gray-700 text-primary"

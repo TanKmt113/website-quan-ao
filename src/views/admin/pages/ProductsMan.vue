@@ -496,6 +496,7 @@ const fetchNations = async () => {
                     :options="GenresOpt"
                     optionLabel="genreName"
                     class="w-full"
+                    :placeholder="productDetail?.genre?.genreName || ''"
                     optionValue="_id"
                   ></Select>
                 </div>
@@ -505,6 +506,7 @@ const fetchNations = async () => {
                     v-model="productDetail.brand"
                     class="w-full"
                     :options="BrandOpts"
+                    :placeholder="productDetail?.brand?.brandName || ''"
                     optionLabel="brandName"
                     optionValue="_id"
                   ></Select>

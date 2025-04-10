@@ -14,6 +14,11 @@ export default [
                 component: () => import('@/views/client/pages/NewProducts.vue')
             },
             {
+                path: '/client/promotion',
+                name: 'promotion',
+                component: () => import('@/views/client/pages/promotion.vue')
+            },
+            {
                 path: '/client/products-list',
                 name: 'products-list',
                 component: () => import('@/views/client/pages/ProductsList.vue')

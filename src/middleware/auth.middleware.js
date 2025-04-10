@@ -2,7 +2,6 @@ export default async function auth() {
     if (!localStorage.getItem('user')) {
         return false;
     }
-
     try {
         const user = JSON.parse(localStorage.getItem('user'));
         const expireDate = new Date(user['ExpireToken']);
