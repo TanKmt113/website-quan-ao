@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center bg-gray-800 text-white">
+  <div class="text-center bg-gray-800 text-white" v-if="user.metadata.user.role == 'A'">
     <router-link to="/"> Truy cập trang admin </router-link>
   </div>
   <div
@@ -111,6 +111,8 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Carts from "../components/Carts.vue";
 import LoginModal from "../components/LoginModal.vue";
+
+const user = JSON.parse(localStorage.getItem("user"));
 const router = useRouter();
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
