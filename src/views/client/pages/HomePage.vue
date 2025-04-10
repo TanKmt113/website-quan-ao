@@ -54,7 +54,7 @@ const fetchAllProducts = async () => {
                 class="hover:scale-110 transition-all ease-in-out duration-300"
               />
             </div>
-            <span class="text-xl font-semibold">Đồ chơi bé trai</span>
+            <span class="text-xl font-semibold">Bộ sưu tập thu đông</span>
           </router-link>
           <router-link to="#" class="flex flex-col gap-2 text-center">
             <div class="overflow-hidden rounded-lg">
@@ -64,7 +64,7 @@ const fetchAllProducts = async () => {
                 class="hover:scale-110 transition-all ease-in-out duration-300"
               />
             </div>
-            <span class="text-xl font-semibold">Đồ chơi bé gái</span>
+            <span class="text-xl font-semibold">Bộ sưu tập 2025</span>
           </router-link>
           <router-link to="#" class="flex flex-col gap-2 text-center">
             <div class="overflow-hidden rounded-lg">
@@ -74,7 +74,7 @@ const fetchAllProducts = async () => {
                 class="hover:scale-110 transition-all ease-in-out duration-300"
               />
             </div>
-            <span class="text-xl font-semibold">Hot Wheels</span>
+            <span class="text-xl font-semibold">Bộ sưu tập áo choàng</span>
           </router-link>
           <router-link to="#" class="flex flex-col gap-2 text-center">
             <div class="overflow-hidden rounded-lg">
@@ -84,7 +84,7 @@ const fetchAllProducts = async () => {
                 class="hover:scale-110 transition-all ease-in-out duration-300"
               />
             </div>
-            <span class="text-xl font-semibold">Ba lô, Túi</span>
+            <span class="text-xl font-semibold">Bộ sưu tập hè 2025</span>
           </router-link>
         </div>
       </section>
