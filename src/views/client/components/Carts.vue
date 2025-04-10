@@ -129,12 +129,8 @@ const onQuantityChange = async (e, data) => {
     productId: data.productId,
     quantity: e.value,
   };
-  console.log(payload);
-
   const res = await updateCart(payload);
-  console.log(res);
-
-  totalCartValue.value = res.data.metadata.totalPrice;
+  totalCartValue.value = res.data.metadata;
 };
 
 const directPayment = () => {

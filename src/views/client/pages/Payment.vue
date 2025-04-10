@@ -17,6 +17,7 @@
               v-model="selectedProvince"
               filter
               fluid
+              :placeholder="payload?.province || ''"
               :options="Province"
               option-label="FullName"
               @change="onProvinceChange"
@@ -35,6 +36,7 @@
                 v-model="selectedDistrict"
                 filter
                 fluid
+                :placeholder="payload?.district || ''"
                 :options="Districts"
                 @change="onDistrictChange"
                 option-label="FullName"
@@ -53,6 +55,7 @@
                 v-model="payload.ward"
                 :options="Wards"
                 option-value="FullName"
+                :placeholder="payload?.ward || ''"
                 option-label="FullName"
                 :invalid="submitted && !payload.ward"
                 fluid
@@ -244,8 +247,8 @@ import { useAuthStore } from "@/store";
 import { useToast } from "primevue/usetoast";
 import { computed, getCurrentInstance, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useCartStore } from "../store/carts";
 import * as yup from "yup";
+import { useCartStore } from "../store/carts";
 
 const { getItem, discount } = useCartStore();
 const { proxy } = getCurrentInstance();
@@ -268,16 +271,7 @@ const payload = ref({
   email: user.email,
   paymentMethod: "cod",
 });
-const PaymentOpts = ref([
-  {
-    label: "COD",
-    value: "cod",
-  },
-  {
-    label: "Zalo",
-    value: "zalo",
-  },
-]);
+
 const route = useRoute();
 const couponModal = ref(false);
 onMounted(async () => {
@@ -286,6 +280,7 @@ onMounted(async () => {
   if (route.query.prd) {
     fetchProductById(route.query.prd);
   }
+  getMe();
 });
 const totalComputed = computed(() => {
   return itemCart.value?.items?.reduce((total, el) => {
@@ -452,6 +447,15 @@ const validate = async (payload) => {
     }
     return false;
   }
+};
+
+const getMe = async () => {
+  const res = await API.get("get-me");
+  payload.value.district = res.data.metadata.district;
+  payload.value.province = res.data.metadata.province;
+  payload.value.ward = res.data.metadata.ward;
+  payload.value.phone = res.data.metadata.phone;
+  payload.value.fullName = res.data.metadata.name;
 };
 </script>
 <style>
