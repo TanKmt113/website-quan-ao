@@ -31,32 +31,33 @@
           "
         >
           <template #option="slotProps">
-            <div
-              class="flex items-center gap-4 p-2 cursor-pointer max-w-[500px] overflow-hidden hover:bg-gray-50"
-              @click="router.push(`/client/detail/${slotProps.option._id}`)"
-            >
-              <img
-                crossorigin="anonymous"
-                :src="slotProps.option.images ? slotProps.option.images[0] : ''"
-                class="w-14 h-14 object-cover rounded-lg"
-                alt="Project Image"
-              />
+            <a :href="`/client/detail/${slotProps.option._id}`">
+              <div
+                class="flex items-center gap-4 p-2 cursor-pointer max-w-[500px] overflow-hidden hover:bg-gray-50"
+              >
+                <img
+                  crossorigin="anonymous"
+                  :src="slotProps.option.images ? slotProps.option.images[0] : ''"
+                  class="w-14 h-14 object-cover rounded-lg"
+                  alt="Project Image"
+                />
 
-              <!-- Thông tin chính -->
-              <div class="flex flex-col min-w-0">
-                <p class="font-semibold text-gray-800 w-full break-words truncate">
-                  {{ slotProps.option.productName }}
-                </p>
-                <div class="flex flex-col gap-2 text-sm text-gray-500 mt-1">
-                  <div class="flex items-center gap-1">
-                    <span>SKU: {{ slotProps.option._id }} đ</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <span> {{ formatPrice(slotProps.option.price) }} đ</span>
+                <!-- Thông tin chính -->
+                <div class="flex flex-col min-w-0">
+                  <p class="font-semibold text-gray-800 w-full break-words truncate">
+                    {{ slotProps.option.productName }}
+                  </p>
+                  <div class="flex flex-col gap-2 text-sm text-gray-500 mt-1">
+                    <div class="flex items-center gap-1">
+                      <span>SKU: {{ slotProps.option._id }} đ</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <span> {{ formatPrice(slotProps.option.price) }} đ</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </template>
         </AutoComplete>
       </div>

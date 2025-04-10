@@ -395,7 +395,7 @@ const confirmOrder = async () => {
 
   let data = {
     ...payload.value,
-    type: route.query.prd ? "NOW" : "CART",
+    orderType: route.query.prd ? "" : "Cart",
     coupon: couponData.value.couponId,
     items,
   };
@@ -409,7 +409,7 @@ const confirmOrder = async () => {
       res.status === 200 ? `Đặt hàng thành công!` : res,
       toast
     );
-    router.push("/client/payment-ing");
+    router.push("/client/new-products");
     if (res.data?.metadata.return_code === 1) {
       router.push("/client/payment-ing");
       window.open(res.data?.metadata?.order_url, "_blank");

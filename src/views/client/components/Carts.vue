@@ -35,7 +35,13 @@
             <strong>{{ item.productName }}</strong>
             <div class="flex items-center justify-between gap-3">
               <div>
-                {{ item.quantity }} x
+                <InputNumber
+                  v-model="item.quantity"
+                  :min="1"
+                  class="cart-number"
+                  @blur="onQuantityChange($event, item)"
+                ></InputNumber>
+                x
                 <strong>{{
                   discount(item)
                     ? formatPrice(item.price - discount(item))
@@ -75,10 +81,11 @@ import { useToast } from "primevue/usetoast";
 import { getCurrentInstance, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "../store/carts";
+
 const { proxy } = getCurrentInstance();
 const toast = useToast();
 const cartModal = ref(false);
-const { getItem, removeItem, discount } = useCartStore();
+const { getItem, removeItem, discount, updateCart } = useCartStore();
 const props = defineProps(["isScrolled"]);
 const router = useRouter();
 const totalCartValue = ref();
@@ -117,14 +124,18 @@ const fetchItem = async () => {
     console.log(error);
   }
 };
-// const onQuantityChange = async (e, data) => {
-//   let payload = {
-//     productId: data.productId,
-//     quantity: e.value,
-//   };
-//   const res = await cartStore.updateCart(payload);
-//   totalCartValue.value = res.data.metadata.totalPrice;
-// };
+const onQuantityChange = async (e, data) => {
+  let payload = {
+    productId: data.productId,
+    quantity: e.value,
+  };
+  console.log(payload);
+
+  const res = await updateCart(payload);
+  console.log(res);
+
+  totalCartValue.value = res.data.metadata.totalPrice;
+};
 
 const directPayment = () => {
   if (totalCartValue.value.items?.length > 0) {
@@ -135,4 +146,12 @@ const directPayment = () => {
   return proxy.$notify("W", "Không có sản phẩm trong giỏ hàng!", toast);
 };
 </script>
-<style></style>
+<style>
+.cart-number {
+  width: 40px;
+}
+.cart-number > input {
+  width: 100% !important;
+  text-align: center;
+}
+</style>

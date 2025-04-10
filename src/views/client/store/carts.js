@@ -32,8 +32,10 @@ export const useCartStore = defineStore('cart', () => {
     const updateCart = async (product) => {
         try {
             const res = await API.create(`cart/UpdateItem`, product)
+            proxy.$notify("S", 'Cập nhật thành công', toast)
             return res
         } catch (error) {
+            proxy.$notify("E", error, toast)
             console.log(error);
         }
     }

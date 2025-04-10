@@ -370,11 +370,15 @@ const updateUser = async () => {
   try {
     const res = await API.updatev2(`update-me`, formData);
     console.log(res);
+    userDetail.value.thumbnail = res.data.metadata.thumbnail;
     proxy.$notify("S", "Cập nhật thành công", toast);
     updateUserModal.value = false;
   } catch (error) {
     proxy.$notify("E", "Cập nhật thất bại", toast);
     console.log(error);
+  } finally {
+    formData.delete("images");
+    formData.delete("items");
   }
 };
 const Openfile = () => {
