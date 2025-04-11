@@ -127,7 +127,7 @@ const getStatus = (status) => {
                 ? `${data?.coupon?.CouponName} (${formatPrice(
                     data?.coupon?.CouponValue
                   )})`
-                : `Không KM`
+                : ``
             }}
           </template>
         </Column>

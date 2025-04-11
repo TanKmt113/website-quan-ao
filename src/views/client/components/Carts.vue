@@ -4,7 +4,7 @@
       class="whitespace-nowrap"
       @click="openModal"
       :text="!isScrolled"
-      :label="`Giỏ hàng (${itemInCart.items?.length})`"
+      :label="`Giỏ hàng (${getCartItems()?.length || 0})`"
       icon="pi pi-shopping-cart"
     ></Button>
 
@@ -85,7 +85,7 @@ import { useCartStore } from "../store/carts";
 const { proxy } = getCurrentInstance();
 const toast = useToast();
 const cartModal = ref(false);
-const { getItem, removeItem, discount, updateCart } = useCartStore();
+const { getItem, removeItem, discount, updateCart, getCartItems } = useCartStore();
 const props = defineProps(["isScrolled"]);
 const router = useRouter();
 const totalCartValue = ref();
@@ -134,7 +134,7 @@ const onQuantityChange = async (e, data) => {
 };
 
 const directPayment = () => {
-  if (totalCartValue.value.items?.length > 0) {
+  if (getCartItems()?.length > 0) {
     cartModal.value = false;
     router.push("/client/payment");
     return;

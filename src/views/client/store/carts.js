@@ -8,14 +8,15 @@ export const useCartStore = defineStore('cart', () => {
     const cart = ref([]);
     const coupon  = ref([]);
 
-
     const getCartItems = () => {
         return cart.value;
     };
     const getItem = async () => {
         const res = await API.get(`cart`);
+        cart.value = res.data.metadata.items;
         return res.data.metadata
     };
+
 
     const addToCart = async (product) => {
         try {
@@ -23,7 +24,8 @@ export const useCartStore = defineStore('cart', () => {
             if (!res) {
                 return proxy.$notify("E", "Có lỗi xảy ra!", toast)
             }
-            proxy.$notify("S", res.data.message, toast)
+            proxy.$notify("S", res.data.message, toast);
+            getItem();
             return res
         } catch (error) {
             throw new Error({ error })
@@ -41,7 +43,8 @@ export const useCartStore = defineStore('cart', () => {
     }
     const removeItem = async (productId) => {
         try {
-            const res = await API.delete('cart/RemoveItem', productId)
+            const res = await API.delete('cart/RemoveItem', productId);
+            getItem()
             return res
         } catch (error) {
             console.log(error);

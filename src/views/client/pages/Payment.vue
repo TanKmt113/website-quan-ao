@@ -212,7 +212,7 @@
           <span class="font-bold">Coupon giảm giá</span>
         </div>
       </template>
-
+      <div class="text-center" v-if="!Coupons.length">Không có coupon giảm giá</div>
       <ScrollPanel
         v-for="(item, index) in Coupons"
         :key="index"
@@ -331,7 +331,9 @@ const openCouponDlg = () => {
 const fetchAllCoupon = async () => {
   try {
     const res = await API.get(`coupon`);
-    Coupons.value = res.data.metadata.result;
+    Coupons.value = res.data.metadata.result.filter(
+      (e) => new Date(e.expiryDate) >= new Date()
+    );
   } catch (error) {
     console.log(error);
   }
@@ -404,6 +406,7 @@ const confirmOrder = async () => {
       res.status === 200 ? `Đặt hàng thành công!` : res,
       toast
     );
+    getItem();
     router.push("/client/new-products");
     if (res.data?.metadata.return_code === 1) {
       router.push("/client/payment-ing");
