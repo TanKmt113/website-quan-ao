@@ -9,7 +9,7 @@ export const useCartStore = defineStore('cart', () => {
     const coupon  = ref([]);
 
     const getCartItems = () => {
-        return cart.value;
+        return cart.value || [];
     };
     const getItem = async () => {
         const res = await API.get(`cart`);
