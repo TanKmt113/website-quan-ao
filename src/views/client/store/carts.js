@@ -17,6 +17,7 @@ export const useCartStore = defineStore('cart', () => {
         return res.data.metadata
     };
 
+
     const addToCart = async (product) => {
         try {
             const res = await API.create('cart/addToCart', product)
@@ -57,7 +58,6 @@ export const useCartStore = defineStore('cart', () => {
         coupon.value = data;
     }
    
-
     return {
         cart,
         getItem,
