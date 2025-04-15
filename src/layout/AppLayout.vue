@@ -6,6 +6,7 @@ import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
 
 const { layoutConfig, layoutState, isSidebarActive, resetMenu } = useLayout();
+const dataDashboard = ref();
 
 const outsideClickListener = ref(null);
 

@@ -1,4 +1,6 @@
 <script setup>
+import API from "@/api/api-main";
+import { formatPrice } from "@/helper/formatPrice";
 import { useLayout } from "@/layout/composables/layout";
 import { ProductService } from "@/service/ProductService";
 import { onMounted, ref, watch } from "vue";
@@ -8,6 +10,7 @@ const { getPrimary, getSurface, isDarkTheme } = useLayout();
 const products = ref(null);
 const chartData = ref(null);
 const chartOptions = ref(null);
+const dataDashboard = ref({});
 
 const items = ref([
   { label: "Add New", icon: "pi pi-fw pi-plus" },
@@ -18,7 +21,13 @@ onMounted(() => {
   ProductService.getProductsSmall().then((data) => (products.value = data));
   chartData.value = setChartData();
   chartOptions.value = setChartOptions();
+  getReport();
 });
+
+const getReport = async () => {
+  const response = await API.get("dashboard");
+  dataDashboard.value = response?.data.metadata;
+};
 
 function setChartData() {
   const documentStyle = getComputedStyle(document.documentElement);
@@ -108,7 +117,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
           <div>
             <span class="block text-muted-color font-medium mb-4">Đơn hàng</span>
             <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
-              152
+              {{ formatPrice(dataDashboard.orderCount || 0) }}
             </div>
           </div>
           <div
@@ -127,7 +136,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
           <div>
             <span class="block text-muted-color font-medium mb-4">Doanh thu</span>
             <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
-              $2.100
+              {{ formatPrice(dataDashboard.totalPriceOfOrder || 0) }} đ
             </div>
           </div>
           <div
@@ -165,9 +174,9 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
       <div class="card mb-0">
         <div class="flex justify-between mb-4">
           <div>
-            <span class="block text-muted-color font-medium mb-4">Bình luận</span>
+            <span class="block text-muted-color font-medium mb-4">Sản phẩm</span>
             <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
-              152 Unread
+              {{ dataDashboard.productCount }}
             </div>
           </div>
           <div
@@ -177,8 +186,8 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
             <i class="pi pi-comment text-purple-500 !text-xl"></i>
           </div>
         </div>
-        <span class="text-primary font-medium">85 </span>
-        <span class="text-muted-color">phản hồi</span>
+        <span class="text-primary font-medium">2 </span>
+        <span class="text-muted-color">Sản phẩm mới</span>
       </div>
     </div>
 
@@ -186,32 +195,28 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
       <div class="card">
         <div class="font-semibold text-xl mb-4">Bán hàng gần đây</div>
         <DataTable
-          :value="products"
+          :value="dataDashboard.top5LastestProducts || []"
           :rows="5"
           :paginator="true"
           responsiveLayout="scroll"
         >
-          <Column style="width: 15%" header="Image">
+          <Column style="width: 15%" header="Ảnh">
             <template #body="slotProps">
               <img
-                :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
+                :src="slotProps.data.thumbnail[0]"
                 :alt="slotProps.data.image"
                 width="50"
                 class="shadow"
               />
             </template>
           </Column>
-          <Column field="name" header="Name" :sortable="true" style="width: 35%"></Column>
-          <Column field="price" header="Price" :sortable="true" style="width: 35%">
+          <Column field="name" header="Name" style="width: 35%"></Column>
+          <Column field="price" header="Đơn giá" style="width: 35%">
             <template #body="slotProps">
-              {{ formatCurrency(slotProps.data.price) }}
+              {{ formatPrice(slotProps.data.price) }} đ
             </template>
           </Column>
-          <Column style="width: 15%" header="View">
-            <template #body>
-              <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
-            </template>
-          </Column>
+          <Column field="quantity" header="SL" style="width: 15%"></Column>
         </DataTable>
       </div>
       <div class="card">
