@@ -1,4 +1,5 @@
 export default async function auth() {
+
     if (!localStorage.getItem('user')) {
         return false;
     }

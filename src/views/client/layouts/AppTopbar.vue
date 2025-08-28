@@ -1,5 +1,8 @@
 <template>
-  <div class="text-center bg-gray-800 text-white" v-if="user.metadata.user.role == 'A'">
+  <div
+    class="text-center bg-gray-800 text-white"
+    v-if="user?.metadata?.user?.role == 'A'"
+  >
     <router-link to="/"> Truy cập trang admin </router-link>
   </div>
   <div
@@ -7,11 +10,7 @@
     class="h-32 w-full drop-shadow-md bg-white flex flex-col gap-1 z-50 sticky top-0"
   >
     <div class="mx-auto h-full container w-full items-center flex justify-between gap-3">
-      <img
-        width="130"
-        src="https://template.hasthemes.com/sinp/sinp/assets/images/logo/logo.webp"
-        alt=""
-      />
+      <h1 class="font-bold text-5xl">KOI</h1>
       <div class="w-[500px]">
         <AutoComplete
           input-id="cc"
